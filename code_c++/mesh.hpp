@@ -6,7 +6,6 @@
 #ifndef __MESH_HPP__
 #define __MESH_HPP__
 
-#include <vector>
 
 /*
 Classe permrettant de définir un mesh regulier.
@@ -21,6 +20,7 @@ la distance @b est la longueur du cote selon y
 #include <vector>
 #include <string>
 #include <fstream>
+#include <iostream>
 
 /*
 @_xmax et @_ymax
@@ -31,7 +31,7 @@ la distance @b est la longueur du cote selon y
 
 
 
-class MeshCarre
+class MeshRegulier
 {
 	public:
 		
@@ -43,15 +43,17 @@ class MeshCarre
 		
 		
 		/*constructeurs*/
-		MeshCarre () = default;
+		MeshRegulier () = default;
 		
-		MeshCarre (double a, double b, int nx, int ny);
-		MeshCarre (std::string chemin);
-		MeshCarre (int nx, int ny);
-		MeshCarre (const MeshCarre &u);
+		MeshRegulier (double a, double b, int nx, int ny);
+		MeshRegulier (std::string chemin);
+		MeshRegulier (int nx, int ny);
+		MeshRegulier (const MeshRegulier &u);
 		
 		/*lecture et ecriture dans les fichiers .dat*/
 		void save(std::string chemin);
+		void genererGrapheGnuplot (std::string chemindonnees, std::string chemingnuplot);
+		void lancerGraphe (std::string chemingraphe);
 		
 		
 		

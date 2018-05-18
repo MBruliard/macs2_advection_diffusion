@@ -10,6 +10,9 @@
 
 >> make mrproper: nettoie tous les fichiers objets et les executables
 
+>> make erasegraphe: efface toutes les données stockées dans le dossier plot
+
+
 
 ### conventions de programmation
 

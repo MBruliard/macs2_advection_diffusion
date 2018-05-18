@@ -11,7 +11,7 @@
 
 
 * dans mesh.cpp
-	- etre capable de la faire apparaitre en graphe sur matlab ou sur gnuplot
+	OK - etre capable de la faire apparaitre en graphe sur matlab ou sur gnuplot
 
 
 * dans advection.cpp

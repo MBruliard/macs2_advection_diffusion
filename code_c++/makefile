@@ -20,6 +20,9 @@ clean:
 mrproper:
 	rm *.o *.exe
 	
+erasegraphe:
+	rm plot/*
+	
 
 # compilation des fichiers .cpp associes aux .hpp
 matrix.o: matrix.cpp matrix.hpp
