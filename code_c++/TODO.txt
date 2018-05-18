@@ -1,0 +1,23 @@
+
+
+
+* dans matrix:
+	- transformer une matrice en sparse 
+	- faire la transposée d'une matrice
+
+* dans sparse_matrix:
+	- faire le produit de deux matrices en sparse
+	- faire la transposée d'une matrice sparse
+
+
+* dans mesh.cpp
+	- etre capable de la faire apparaitre en graphe sur matlab ou sur gnuplot
+
+
+* dans advection.cpp
+
+* dans diffusion.cpp
+
+* dans rigidite.cpp
+	- calcule la matrice de rigidité pour l'advection
+	
