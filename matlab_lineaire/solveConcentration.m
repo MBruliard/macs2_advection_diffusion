@@ -54,7 +54,7 @@ while time < PDE.T_final
     end
     % zlim(Z_scale)
     view(0, 90)
-    title(sprintf("Concentration\nNx=%d, Ny=%d, dt=%f, t=%f", Nx, Ny, dt, time))
+    title(sprintf('Concentration\nNx=%d, Ny=%d, dt=%f, t=%f', Nx, Ny, dt, time))
     pause(0.00001)
 end
 hold off

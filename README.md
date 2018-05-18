@@ -18,7 +18,8 @@ dans le dossier macs2_advection_diffusion lancer dans le terminal la commande su
 --------------------------------------------
 ##  Composition du projet
 
-* Repository matlab_lineaire
-* Repository code_c++
+* Repository matlab_lineaire: Résolution du problème dans le cas linéaire sur Matlab.
+
+* Repository code_c++ : A venir Résoluton du problème dans le cas non-lineaire en C++
 
 Un README est disponible dans chaque repository pour expliquer les différentes commandes
