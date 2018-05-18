@@ -4,21 +4,21 @@ function [ C_updated ] = updateConcentration( PDE, C, V, Nx, Ny, dt )
 % [ C ] = updateConcentration( PDE, C, V, Nx, Ny, dt );
 %
 % Inputs:
-%  PDE: PDE object containing information about the system
-%  C:   concentration matrix of size Ny by Nx, where Nx is the number of
-%       columns and Ny the number of rows of the mesh
-%  V.x: velocity matrix (Ox direction) of size Nx x Ny by 4, where the
-%       first argument is the cell number and the second one is the border
-%       indice (anticlockwise, lower border is number 1)
-%  V.y: velocity matrix (Oy direction) of size Nx x Ny by 4, where the
-%       first argument is the cell number and the second one is the border
-%       indice (anticlockwise, lower border is number 1)
-%  Nx:  number of discretization columns on the x axis
-%  Ny:  number of discretization rows on the y axis
-%  dt:  step of time
+%  PDE  PDE object containing information about the system
+%  C -- concentration matrix of size Ny by Nx, where Nx is the number
+%       of columns and Ny the number of rows of the mesh
+%  V.x  velocity matrix (Ox direction) of size Nx x Ny by 4, where the
+%       first argument is the cell number and the second one is the
+%       border index (anticlockwise, lower border is number 1)
+%  V.y  velocity matrix (Oy direction) of size Nx x Ny by 4, where the
+%       first argument is the cell number and the second one is the
+%       border index (anticlockwise, lower border is number 1)
+%  Nx - number of discretization columns on the x axis
+%  Ny - number of discretization rows on the y axis
+%  dt - step of time
 %
 % Outputs:
-%  C_updated: concentration matrix of size Ny by Nx, where Nx is the number
+%  C_updated  concentration matrix of size Ny by Nx, where Nx is the number
 %             of columns and Ny the number of rows of the mesh
 
 
@@ -45,7 +45,7 @@ for i = 2 : Nx-1
         end
 
         if V.x(k, RIGHT_BORDER) >= 0
-            right_flux = V.x(k, RIGHT_BORDER) *C(j,i);
+            right_flux = V.x(k, RIGHT_BORDER) * C(j,i);
         else
             right_flux = V.x(k, RIGHT_BORDER) * C(j,i+1);
         end
@@ -66,6 +66,56 @@ for i = 2 : Nx-1
             - dt/ dx * ( right_flux - left_flux) + ...
             - dt/ dy * ( upper_flux - lower_flux);
 
+    end
+end
+
+if true == PDE.compute_diffusion
+    GradC = computeGradient( PDE, C, Nx, Ny );
+
+    for i = 2 : Nx-1
+        for j = 2 : Ny-1
+            k = i + (j-1)*Nx;
+
+            x_pos = PDE.x_min + j*dx;
+            y_pos = PDE.y_min + i*dy;
+
+            % Computing the diffusion matrix at interfaces
+            D_21_below =   0.5 * PDE.D.eval_coef(2,1,x_pos,y_pos-dy) + ...
+                         + 0.5 * PDE.D.eval_coef(2,1,x_pos,y_pos);
+            D_22_below =   0.5 * PDE.D.eval_coef(2,2,x_pos,y_pos-dy) + ...
+                         + 0.5 * PDE.D.eval_coef(2,2,x_pos,y_pos);
+
+            D_11_right =   0.5 * PDE.D.eval_coef(1,1,x_pos+dx,y_pos) + ...
+                         + 0.5 * PDE.D.eval_coef(1,1,x_pos,y_pos);
+            D_12_right =   0.5 * PDE.D.eval_coef(1,2,x_pos+dx,y_pos) + ...
+                         + 0.5 * PDE.D.eval_coef(1,2,x_pos,y_pos);
+
+            D_21_above =   0.5 * PDE.D.eval_coef(2,1,x_pos,y_pos+dy) + ...
+                         + 0.5 * PDE.D.eval_coef(2,1,x_pos,y_pos);
+            D_22_above =   0.5 * PDE.D.eval_coef(2,2,x_pos,y_pos+dy) + ...
+                         + 0.5 * PDE.D.eval_coef(2,2,x_pos,y_pos);
+
+            D_11_left =   0.5 * PDE.D.eval_coef(1,1,x_pos-dx,y_pos) + ...
+                        + 0.5 * PDE.D.eval_coef(1,1,x_pos,y_pos);
+            D_12_left =   0.5 * PDE.D.eval_coef(1,2,x_pos-dx,y_pos) + ...
+                        + 0.5 * PDE.D.eval_coef(1,2,x_pos,y_pos);
+
+            % Computing the concentration diffusion through each cell
+            lower_diffusion = (D_21_below * GradC.x(k, LOWER_BORDER) + ...
+                + D_22_below * GradC.y(k, LOWER_BORDER)) / dy;
+            right_diffusion = (D_11_right * GradC.x(k, RIGHT_BORDER) + ...
+                + D_12_right * GradC.y(k, RIGHT_BORDER)) / dx;
+            upper_diffusion = (D_21_above * GradC.x(k, UPPER_BORDER) + ...
+                + D_22_above * GradC.y(k, UPPER_BORDER)) / dy;
+            left_diffusion = (D_11_left * GradC.x(k, LEFT_BORDER) + ...
+                + D_12_left * GradC.y(k, LEFT_BORDER)) / dx;
+
+            diffusion = - lower_diffusion + right_diffusion + ...
+                        + upper_diffusion - left_diffusion;
+
+            C_updated(j,i) = C_updated(j,i) + dt * diffusion;
+
+        end
     end
 end
 

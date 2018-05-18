@@ -3,13 +3,13 @@ function [ H ] = solvePressure( PDE, Nx, Ny )
 % [ H ] = solvePressure( PDE, Nx, Ny );
 %
 % Inputs:
-%  PDE: PDE object containing information about the system
-%  Nx:  number of discretization columns on the x axis
-%  Ny:  number of discretization rows on the y axis
+%  PDE  PDE object containing information about the system
+%  Nx - number of discretization columns on the x axis
+%  Ny - number of discretization rows on the y axis
 %
 % Outputs:
-%  H:  pressure matrix of size Ny by Nx, where Nx is the number of columns
-%      and Ny the number of rows of the mesh
+%  H  pressure matrix of size Ny by Nx, where Nx is the number of columns
+%     and Ny the number of rows of the mesh
 
 
 dx = (PDE.x_max - PDE.x_min) / (Nx-1);

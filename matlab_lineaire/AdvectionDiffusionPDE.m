@@ -21,6 +21,7 @@ classdef AdvectionDiffusionPDE < handle
         boundary_condition4
         subdomains
         show_subdomains
+        compute_diffusion
     end
     
     

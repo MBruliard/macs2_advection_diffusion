@@ -4,16 +4,16 @@ function [ F ] = makeDirichletCondition( PDE, F, Nx, Ny, dx, dy )
 % [ F ] = makeDirichletCondition( PDE, F, Nx, Ny, dx, dy );
 %
 % Inputs:
-%  PDE: PDE object containing information about the system
-%  F:   pressure vector of size Ny by Nx, where Nx is the number of columns
+%  PDE  PDE object containing information about the system
+%  F -- pressure vector of size Ny by Nx, where Nx is the number of columns
 %       and Ny the number of rows of the mesh
-%  Nx:  number of discretization columns on the x axis
-%  Ny:  number of discretization rows on the y axis
-%  dx:  step size in the Ox direction
-%  dy:  step size in the Oy direction
+%  Nx - number of discretization columns on the x axis
+%  Ny - number of discretization rows on the y axis
+%  dx - step size in the Ox direction
+%  dy - step size in the Oy direction
 %
 % Outputs:
-%  F: pressure vector of size Ny by Nx, where Nx is the number of columns
+%  F  pressure vector of size Ny by Nx, where Nx is the number of columns
 %     and Ny the number of rows of the mesh
 
 

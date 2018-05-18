@@ -97,10 +97,10 @@ classdef MatrixFunction < handle
             nb_subdomains = length(obj.subdomains);
             for k = nb_subdomains : -1 : 1
                 if obj.subdomains{k}.contains_coord(x,y)
-                    M(1,1) = obj.m_obstacle_value{k}{1,1}(x,y);
-                    M(1,2) = obj.m_obstacle_value{k}{1,2}(x,y);
-                    M(2,1) = obj.m_obstacle_value{k}{2,1}(x,y);
-                    M(2,2) = obj.m_obstacle_value{k}{2,2}(x,y);
+                    M(1,1) = obj.m_subdomain_value{k}{1,1}(x,y);
+                    M(1,2) = obj.m_subdomain_value{k}{1,2}(x,y);
+                    M(2,1) = obj.m_subdomain_value{k}{2,1}(x,y);
+                    M(2,2) = obj.m_subdomain_value{k}{2,2}(x,y);
                     return
                 end
             end
